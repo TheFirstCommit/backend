@@ -37,6 +37,12 @@ public class SecurityConfig {
                 .requestMatchers("/api/**").hasRole(UserRole.USER.name())
                 .requestMatchers("/social/**").hasRole(UserRole.SOCIAL.name()) // 가족 구성 이전의 회원 들 (다른 api 접근 불가능)
                 .requestMatchers("/admin/**").hasRole(UserRole.ADMIN.name())
+                    .requestMatchers(
+                            "/swagger-ui.html",
+                            "/swagger-ui/**",
+                            "/v3/api-docs/**",
+                            "/api-docs/**"
+                    ).permitAll()
                 .anyRequest().denyAll()
             )
             .exceptionHandling(exception -> exception

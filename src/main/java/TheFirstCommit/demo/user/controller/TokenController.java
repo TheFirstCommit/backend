@@ -4,19 +4,17 @@ import TheFirstCommit.demo.common.SuccessResponse;
 import TheFirstCommit.demo.config.security.util.JWTUtil;
 import TheFirstCommit.demo.exception.CustomException;
 import TheFirstCommit.demo.exception.ErrorCode;
-import TheFirstCommit.demo.user.dto.ResponseTokenDto;
+import TheFirstCommit.demo.user.dto.response.ResponseTokenDto;
 import TheFirstCommit.demo.user.service.UserValidateService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/public/token")
 @Slf4j
@@ -37,6 +35,6 @@ public class TokenController {
             () -> new CustomException(ErrorCode.INVALID_TOKEN)
         );
         log.info("refresh access token success " + userId);
-        return ResponseEntity.ok(new SuccessResponse("success", ResponseTokenDto.access(JWTUtil.generateAccessToken(userId))));
+        return ResponseEntity.ok(new SuccessResponse("success", new ResponseTokenDto(JWTUtil.generateAccessToken(userId))));
     }
 }
